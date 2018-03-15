@@ -12,7 +12,7 @@ import os
 KERNEL_FETCH_URL = 'http://kernel.ubuntu.com/~kernel-ppa/mainline/'
 
 def write_log(version_number=None, warning=None):
-    with open('/root/kernel_update.log', 'w+') as f:
+    with open('/root/kernel_update.log', 'a') as f:
         if version_number:
             f.write(str(datetime.datetime.now()) + ' updates kernel: ' + version_number + '\n')
         if warning:
@@ -59,3 +59,4 @@ if __name__ == '__main__':
         init()
     except Exception as e:
         write_log(warning=str(e))
+

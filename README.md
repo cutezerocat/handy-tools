@@ -29,7 +29,7 @@ Download Bing daily wallpaper, on Windows, it will save to D:\temp\bing, on Linu
 
 Usage: add_trailing_newline.py FILE...
 
-Append newline character into FILES... if the FILE end without a newline.
+Append newline character into FILE... if the FILE end without a newline.
 
 Currently Support OS: **Linux**
 

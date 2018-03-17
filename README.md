@@ -27,7 +27,7 @@ Download Bing daily wallpaper, on Windows, it will save to D:\temp\bing, on Linu
 
 ### add_trailing_newline.py
 
-Usage: add-trailing-newline.py FILE...
+Usage: add_trailing_newline.py FILE...
 
 Append newline character into FILES... if the FILE end without a newline.
 

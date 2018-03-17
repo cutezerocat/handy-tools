@@ -42,11 +42,17 @@ def init():
     version_list = [ i.text[1:-1] for i in a_list_from_html if i.text.find('-') == -1 ]
     max_version = max(version_list, key = cmp_to_key(cmp))
 
-    if cmp(max_version, get_kernel_version()) == 1:
+    if cmp(max_version, get_kernel_version()) > 0:
         base_url = 'http://kernel.ubuntu.com/~kernel-ppa/mainline/v'+max_version+'/'
         new_soup = BeautifulSoup(requests.get(base_url).text, 'lxml')
         download_available_url = new_soup.find_all('a')
+        download_headers_all_url = ''
+        for url in download_available_url:
+            if url.text.find('all') != -1:
+                download_headers_all_url = base_url+url['href']
+                break
         download_available_url = [ base_url+url['href'] for url in download_available_url if url.text.find('amd64') != -1 and url.text.find('generic') != -1 ][:2]
+        download_available_url.insert(0, download_headers_all_url)
 
         os.system('rm linux-*')
         os.system('wget ' + ' '.join(download_available_url))

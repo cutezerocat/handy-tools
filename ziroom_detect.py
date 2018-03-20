@@ -5,6 +5,7 @@ import json
 import requests
 from bs4 import BeautifulSoup
 import argparse
+import sys
 
 HEADERS = json.load(open('firefox_headers.json'))['headers']
 try:
@@ -40,17 +41,21 @@ def print_house_details(house_list, args):
     for i in house_list.find_all('li'):
         house = get_house_detail(i)
 
+        if args.debug:
+            print('---Debug---\n{}\n------'.format(str(house)), file=sys.stderr)
+
         if args.display_available_house and house['status'] == '配置中':
             continue
         print('{:<20}{:^15} {:^5}\t{}'.format(house['name'], house['price'], house['status'], house['detail']))
-        if args.show_url:
-            print('{}'.format(house['url']))
+        if args.display_url:
+            print('|-----{}'.format(house['url']))
 
 
 def argu_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument("-a", "--display-available-house", help='只显示可用的房子', action='store_true')
     parser.add_argument('-u', '--display-url', help='显示住房链接', action='store_true')
+    parser.add_argument('--debug', action='store_true')
 
     return parser.parse_args()
 

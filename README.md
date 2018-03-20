@@ -6,7 +6,7 @@ These tools is used to automatically handle some tedious tasks, just for fun and
 
 * [update_kernel.py](#update_kernelpy)
 * [check_online_file_sha256.sh](#check_online_file_sha256sh)
-* [download_bing_wallpaper](#download_bing_wallpaperpy)
+* [download_bing_wallpaper.py](#download_bing_wallpaperpy)
 * [add_trailing_newline.py](#add_trailing_newlinepy)
 * [ziroom_detect.py](#ziroom_detectpy)
 

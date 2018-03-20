@@ -1,0 +1,50 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import json
+import requests
+from bs4 import BeautifulSoup
+
+HEADERS = json.load(open('firefox_headers.json'))['headers']
+try:
+    URL = open('.user-config/ziroom_url.txt').read().strip()
+except FileNotFoundError:
+    print('请在 .user-config/ziroom_url.txt 内保存你的自如搜索结果页网址，例如 http://www.ziroom.com/z/nl/.html?qwd=%E5%BD%A9%E8%99%B9%E6%96%B0%E5%9F%8E')
+    exit(1)
+
+def house_status(webpsrc):
+    if webpsrc.find('defaultPZZ') != -1:
+        if webpsrc.find('canbook') != -1:
+            return '可预定'
+        else:
+            return '配置中'
+    else:
+        return '可入住'
+
+def get_house_detail(house_li):
+    detail = {}
+
+    detail['name'] = house_li.find(class_='t1').string.strip()
+    house_price = house_li.find(class_='price').contents
+    detail['price'] = house_price[0].strip() + house_price[1].string
+    house_properties = house_li.find(class_='detail').find_all('span')
+    detail['detail'] = '、'.join([i.string.strip() for i in house_properties])
+    detail['status'] = house_status(house_li.find('img')['_webpsrc'])
+
+    return detail
+
+def print_house_details(house_list):
+    for i in house_list.find_all('li'):
+        house = get_house_detail(i)
+        print('{:<20}{:^15} {:^5}\t{}'.format(house['name'], house['price'], house['status'], house['detail']))
+
+def init():
+    s = requests.Session()
+
+    soup = BeautifulSoup(s.get(URL, headers=HEADERS).text, 'lxml')
+    house_list = soup.find_all(id='houseList')[0]
+
+    print_house_details(house_list)
+
+if __name__ == '__main__':
+    init()

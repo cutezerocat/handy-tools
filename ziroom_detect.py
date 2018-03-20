@@ -4,6 +4,7 @@
 import json
 import requests
 from bs4 import BeautifulSoup
+import argparse
 
 HEADERS = json.load(open('firefox_headers.json'))['headers']
 try:
@@ -24,7 +25,9 @@ def house_status(webpsrc):
 def get_house_detail(house_li):
     detail = {}
 
-    detail['name'] = house_li.find(class_='t1').string.strip()
+    house_name = house_li.find(class_='t1')
+    detail['name'] = house_name.string.strip()
+    detail['url'] = 'http://' + house_name['href']
     house_price = house_li.find(class_='price').contents
     detail['price'] = house_price[0].strip() + house_price[1].string
     house_properties = house_li.find(class_='detail').find_all('span')
@@ -33,18 +36,32 @@ def get_house_detail(house_li):
 
     return detail
 
-def print_house_details(house_list):
+def print_house_details(house_list, args):
     for i in house_list.find_all('li'):
         house = get_house_detail(i)
+
+        if args.display_available_house and house['status'] == '配置中':
+            continue
         print('{:<20}{:^15} {:^5}\t{}'.format(house['name'], house['price'], house['status'], house['detail']))
+        if args.show_url:
+            print('{}'.format(house['url']))
+
+
+def argu_parser():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-a", "--display-available-house", help='只显示可用的房子', action='store_true')
+    parser.add_argument('-u', '--display-url', help='显示住房链接', action='store_true')
+
+    return parser.parse_args()
 
 def init():
+    args = argu_parser()
     s = requests.Session()
 
     soup = BeautifulSoup(s.get(URL, headers=HEADERS).text, 'lxml')
     house_list = soup.find_all(id='houseList')[0]
 
-    print_house_details(house_list)
+    print_house_details(house_list, args)
 
 if __name__ == '__main__':
     init()

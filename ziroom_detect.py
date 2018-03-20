@@ -28,7 +28,7 @@ def get_house_detail(house_li):
 
     house_name = house_li.find(class_='t1')
     detail['name'] = house_name.string.strip()
-    detail['url'] = 'http://' + house_name['href']
+    detail['url'] = 'http:' + house_name['href']
     house_price = house_li.find(class_='price').contents
     detail['price'] = house_price[0].strip() + house_price[1].string
     house_properties = house_li.find(class_='detail').find_all('span')

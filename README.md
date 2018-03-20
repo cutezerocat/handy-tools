@@ -40,4 +40,6 @@ Currently Support File Type: **.py, .txt, .md, .php, .sh, .c, .h, .cpp, .cc, .ht
 
 **Attention: First of all, you must save your url of ziroom.com search page in *.user-config/ziroom_url.txt* .**
 
+Usage: ziroom_detect.py [-a/--display-available-house] [-u/--display-url]
+
 Print the house details in ziroom.com to find the one you want instead of refreshing your browsers repeatly.

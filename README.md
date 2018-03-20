@@ -38,6 +38,6 @@ Currently Support File Type: **.py, .txt, .md, .php, .sh, .c, .h, .cpp, .cc, .ht
 
 ### ziroom_detect.py
 
-**Attention: First of all， you must save your url of ziroom.com search page in *.user-config/ziroom_url.txt* .**
+**Attention: First of all, you must save your url of ziroom.com search page in *.user-config/ziroom_url.txt* .**
 
-Print the house details in ziroom.com to find the one you want instead of refresh your browsers repeatly.
+Print the house details in ziroom.com to find the one you want instead of refreshing your browsers repeatly.

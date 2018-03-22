@@ -14,7 +14,7 @@ def set_save_path():
     if platform.system() == 'Windows':
         os.chdir('D:\\temp\\bing')
     elif platform.system() == 'Linux':
-        if subprocess.getoutput('uname -a').find('Windows') != -1:
+        if subprocess.getoutput('uname -a').find('Microsoft') != -1:
             os.chdir('/mnt/d/temp/bing')
         else:
             os.chdir('/tmp')
